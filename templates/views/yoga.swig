@@ -190,6 +190,14 @@ image115 img {width: 115px; height: auto;}
 } </style> 
 
 </head>
+
+
+{% macro showYogaSection(section) %}
+  <h3>{{ section.title }}</h3>
+  <image src="{{ section.navimage.url }}" />
+{% endmacro %}
+
+
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
  
@@ -2363,7 +2371,12 @@ border-radius: 6px;">
           </tr>
           </table>
           <!-- End Wrapper --> 
-           
+          <!-- keystone rendering test area -->
+           <h1>THIS IS A TEST</h1>
+           {% for section in data.yogasections %}
+            {{ showYogaSection(section) }}
+           {% endfor %}
+           {# <strong>{{ data.yogasections | safe }}</strong> #}
          </div>
     
    

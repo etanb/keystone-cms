@@ -197,6 +197,59 @@ image115 img {width: 115px; height: auto;}
   <image src="{{ section.navimage.url }}" />
 {% endmacro %}
 
+{% macro yogaHeaderSection(body) %}
+  <table id="about-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
+    <tr>
+      <tr>
+        <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="{{ body.navimage.url }}" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
+      </tr>
+      <tr>
+        <td width="100%" height="25"></td>
+      </tr>
+      <tr>
+        <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
+            {{ body.navtitle }}<!--[if !mso]><!--></span><!--<![endif]--></p></td>
+      </tr>
+      <tr>
+        <td width="100%" height="25"></td>
+      </tr>
+    </tr>
+
+  </table>
+{% endmacro %}
+
+{% macro yogaBodySection(body) %}
+  <table id="about-section" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
+    
+    <tr>
+      <td width="100%" height="25"></td>
+    </tr>
+    <tr>
+      <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;"class="fullCenter" >
+      {{ body.content|safe }}
+      <br />
+      {% if body.calenderembed %}
+        {{ body.calenderembed }}
+      {% endif %}
+      <br />
+      {% if body.imagegallery %}
+        <div class="wallop-slider">
+          <ul class="wallop-slider__list">
+            {% for image in body.imagegallery %}
+              <li class="wallop-slider__item">
+                <img src="{{ image.url }}" width="500">
+              </li>
+            {% endfor %}
+          </ul>
+          <button class="wallop-slider__btn wallop-slider__btn--previous" disabled="disabled">Previous</button>
+          <button class="wallop-slider__btn wallop-slider__btn--next">Next</button>
+        </div>
+      {% endif %}
+      </td>
+    </tr>
+  </table>
+{% endmacro %}
+
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
@@ -325,6 +378,45 @@ image115 img {width: 115px; height: auto;}
   </table>
   <!-- Wrapper 2 --> 
   
+  <!-- NAV TEST SECTION -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full" >
+    <tr>
+      <td width="100%"> 
+          
+          <!-- Wrapper -->
+          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile">
+            <tr>
+              <td width="100%" height="66"></td>
+            </tr>
+            <tr>
+              <td width="100%"><!-- WrapperNew -->
+                
+                <table width="870" border="0" cellpadding="0" cellspacing="0" align="center" class="fullCenter">
+                  <tr>
+                    <td width="100%"><!-- Feature 1 -->
+
+                      <!-- Midbody Nav -->
+                      {% for body in data.yogasections %}
+                       {{ yogaHeaderSection(body) }}
+                      {% endfor %}
+
+                      {% for body in data.yogasections %}
+                       {{ yogaBodySection(body) }}
+                      {% endfor %}
+
+                      </td>
+                  </tr>
+                </table>
+
+
+              </td> <!-- END WRAPPER NEW-->
+            </tr>
+          </table>
+    </td>
+  </tr>
+</table>
+  <!-- END -->
+
   <!-- Wrapper 3  Feature List-->
   <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full" >
     <tr>
@@ -528,27 +620,7 @@ image115 img {width: 115px; height: auto;}
                               <li><center><br /><img src="./photos/yogaphoto.jpg" width="500"/></center></li>
                             </ul> -->
 
-                            <div class="wallop-slider">
-                              <ul class="wallop-slider__list">
-                                <li class="wallop-slider__item wallop-slider__item--current">
-                                  <img src="./photos/yogabackbend.jpg" width="500">
-                                </li>
-                                <li class="wallop-slider__item">
-                                  <img src="./photos/yogabird.jpg" width="500">
-                                </li>
-                                <li class="wallop-slider__item">
-                                  <img src="./photos/yogadancer.jpg" width="500">
-                                </li>
-                                <li class="wallop-slider__item">
-                                  <img src="./photos/yogaheadstand.jpg" width="500">
-                                </li>
-                                <li class="wallop-slider__item">
-                                  <img src="./photos/yogaphoto.jpg" width="500">
-                                </li>
-                              </ul>
-                              <button class="wallop-slider__btn wallop-slider__btn--previous" disabled="disabled">Previous</button>
-                              <button class="wallop-slider__btn wallop-slider__btn--next">Next</button>
-                            </div>
+                            
 
                           </td>
                         </tr>

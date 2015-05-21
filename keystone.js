@@ -17,6 +17,8 @@ keystone.init({
 
 	'name': 'CMS-UWS',
 	'brand': 'CMS-UWS',
+
+
 	
 	'less': 'public',
 	'static': 'public',

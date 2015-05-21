@@ -15,10 +15,10 @@ YogaSection.add({
 	title: { type: String, required: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
 	navimage: { type: Types.CloudinaryImage },
-	content: {
-		brief: { type: Types.Html, wysiwyg: true, height: 150 },
-		extended: { type: Types.Html, wysiwyg: true, height: 400 }
-	},
+	navtitle: { type: String },
+	content: { type: Types.Html, wysiwyg: true, height: 400 },
+	imagegallery: { type: Types.CloudinaryImages },
+	calenderembed: { type: Types.Html, wysiwyg: false }
 });
 
 YogaSection.schema.virtual('content.full').get(function() {

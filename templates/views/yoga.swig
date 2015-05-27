@@ -305,8 +305,8 @@ image115 img {width: 115px; height: auto;}
   <!-- Wrapper 2  Top Header-->
   <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full"  bgcolor="#f87d76"style="background-color: rgb(248, 125, 118);">
     <tr>
-      <td width="100%" valign="top"style="-webkit-background-size: cover; background-image: url('http://rocketway.net/themebuilder/template/templates/yoga/images/section-one.jpg'); background-color: rgb(248, 125, 118); background-size: cover; background-position: center center; background-repeat: no-repeat;" id="BGheaderChange">
-      	
+      <td width="100%" valign="top"style="-webkit-background-size: cover; background-image: url('{{ data.yogaheader.headerbackgroundimage.url }}'); background-color: rgb(248, 125, 118); background-size: cover; background-position: center center; background-repeat: no-repeat;" id="BGheaderChange">
+      	{{ data.yogaheader | safe }}
             
             <div class="sortable_inner ui-sortable">
             <!-- Wrapper -->

@@ -197,6 +197,10 @@ image115 img {width: 115px; height: auto;}
   <image src="{{ section.navimage.url }}" />
 {% endmacro %}
 
+{% macro yogaHead(body) %}
+  <h2>{{ body.headline }}</h2>
+{% endmacro %}
+
 {% macro yogaHeaderSection(body) %}
   <table id="about-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
     <tr>
@@ -303,10 +307,10 @@ image115 img {width: 115px; height: auto;}
   <!-- End Wrapper 1 --> 
   
   <!-- Wrapper 2  Top Header-->
+  {% for body in data.yogaheader %}
   <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full"  bgcolor="#f87d76"style="background-color: rgb(248, 125, 118);">
     <tr>
-      <td width="100%" valign="top"style="-webkit-background-size: cover; background-image: url('{{ data.yogaheader.headerbackgroundimage.url }}'); background-color: rgb(248, 125, 118); background-size: cover; background-position: center center; background-repeat: no-repeat;" id="BGheaderChange">
-      	{{ data.yogaheader | safe }}
+      <td width="100%" valign="top"style="-webkit-background-size: cover; background-image: url('{{ body.headerbackgroundimage.url }}'); background-color: rgb(248, 125, 118); background-size: cover; background-position: center center; background-repeat: no-repeat;" id="BGheaderChange">
             
             <div class="sortable_inner ui-sortable">
             <!-- Wrapper -->
@@ -318,7 +322,7 @@ image115 img {width: 115px; height: auto;}
             
              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
               <tr>
-                <td height="auto" width="600" valign="bottom" style="line-height: 1px; text-align: center;"><span style="display: block;"> <a href="#" style="text-decoration: none; color: #ffffff; font-family: Helvetica, Arial, sans-serif; font-size: 20px; text-align:center;" ><img width="262" height="auto" src="http://rocketway.net/themebuilder/template/templates/yoga/images/relax_262.png" alt="" border="0" style="font-size: 20px; height: auto;" id="box"  cu-identify="element_03635729623492807"></a></span></td>
+                <td height="auto" width="600" valign="bottom" style="line-height: 1px; text-align: center;"><span style="display: block;"> <a href="#" style="text-decoration: none; color: #ffffff; font-family: Helvetica, Arial, sans-serif; font-size: 20px; text-align:center;" ><img width="262" height="auto" src="{{ body.headerimagesmall.url }}" alt="" border="0" style="font-size: 20px; height: auto;" id="box"  cu-identify="element_03635729623492807"></a></span></td>
               </tr>
               <tr>
                 <td width="100%" height="12"></td>
@@ -331,14 +335,14 @@ image115 img {width: 115px; height: auto;}
               </tr>
               <tr>
                 <td valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 60px; letter-spacing: 10px; text-transform: uppercase; line-height: 100px; word-break: break-word;"class="font89" id="box" ><span  cu-identify="element_0251054429449141"><!--[if !mso]><!--><span style="font-family: 'proxima_novathin', Helvetica; "><!--<![endif]-->
-                  Genny Krause Yoga<!--[if !mso]><!--></span><!--<![endif]--></span></td>
+                  {{ body.headline }}<!--[if !mso]><!--></span><!--<![endif]--></span></td>
               </tr>
               </table>
               
               <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
               <tr>
                 <td valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 18px; letter-spacing: 1px; text-transform: uppercase;"class="textCenter" id="box" ><span  cu-identify="element_05224484449718148"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica; "><!--<![endif]-->
-                  The practice of peace and courage<!--[if !mso]><!--></span><!--<![endif]--></span></td>
+                  {{ body.subtext }}<!--[if !mso]><!--></span><!--<![endif]--></span></td>
               </tr>
               </table>
               
@@ -351,7 +355,7 @@ image115 img {width: 115px; height: auto;}
               <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
               <tr>
                 <td height="auto" valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 14px; line-height: 26px; font-weight: normal;"class="textCenter" id="box2" >
-               	 	<p  cu-identify="element_07646508188918233"><span style="font-family: proxima_nova_rgregular, Helvetica;">Genny Krause is a yoga instructor based out of Reno, Nevada who specializes in Vinyasa, Yin, and modified Ashtanga yoga. &nbsp;Come share your practice!</span></p>
+               	 	<p  cu-identify="element_07646508188918233"><span style="font-family: proxima_nova_rgregular, Helvetica;">{{ body.subsubtext }}</span></p>
                 </td>
               </tr>
               </table>
@@ -376,8 +380,9 @@ image115 img {width: 115px; height: auto;}
         </td>
     </tr>
   </table>
+  {% endfor %}
   <!-- Wrapper 2 --> 
-  
+
   <!-- NAV TEST SECTION -->
 <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full" >
     <tr>

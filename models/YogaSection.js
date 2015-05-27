@@ -14,6 +14,7 @@ var YogaSection = new keystone.List('YogaSection', {
 YogaSection.add({
 	title: { type: String, required: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
+	order: { type: Types.Number },
 	navimage: { type: Types.CloudinaryImage },
 	navtitle: { type: String },
 	content: { type: Types.Html, wysiwyg: true, height: 400 },

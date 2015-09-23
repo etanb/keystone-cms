@@ -1,0 +1,61 @@
+{
+  "name": "wallop",
+  "version": "2.2.1",
+  "description": "wallop is a minimal 4kb library for showing & hiding things",
+  "main": "js/Wallop.js",
+  "scripts": {
+    "test": "zuul --local 9966 -- test.js",
+    "ci": "zuul -- test.js",
+    "uglify": "uglifyjs ./js/Wallop.js -o ./js/Wallop.min.js --comments -m -c ",
+    "build": "npm run uglify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peduarte/wallop.git"
+  },
+  "keywords": [
+    "slider",
+    "css",
+    "js",
+    "minimal",
+    "responsive",
+    "wallop"
+  ],
+  "author": {
+    "name": "Pedro Duarte",
+    "email": "contact@peduarte.com",
+    "url": "http://pedroduarte.me"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peduarte/wallop/issues"
+  },
+  "homepage": "http://pedroduarte.me/wallop",
+  "devDependencies": {
+    "tape": "^4.2.0",
+    "uglify-js": "^2.4.24",
+    "zuul": "^3.3.0"
+  },
+  "gitHead": "ae90d8a9491a9d9abcf96bb49d823f979b0d86e2",
+  "_id": "wallop@2.2.1",
+  "_shasum": "4eb68c338d04fc5e01a7fa4ab0dd492d3d39aed6",
+  "_from": "wallop@*",
+  "_npmVersion": "2.13.5",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "peduarte",
+    "email": "contact@pedaurte.com"
+  },
+  "dist": {
+    "shasum": "4eb68c338d04fc5e01a7fa4ab0dd492d3d39aed6",
+    "tarball": "http://registry.npmjs.org/wallop/-/wallop-2.2.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "peduarte",
+      "email": "contact@pedaurte.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/wallop/-/wallop-2.2.1.tgz"
+}

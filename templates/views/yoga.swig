@@ -5,15 +5,14 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script> -->
 
-<script src="./jquery-1.11.2.min.js"></script>
-<script src="./jqueryui/jquery-ui.min.js"></script>
+<script src="/js/jquery/jquery-1.11.2.min.js"></script>
+<script src="/jqueryui/jquery-ui.min.js"></script>
 
 <!-- bxSlider Javascript file -->
-<script src="./bxslider-4/dist/jquery.bxslider.min.js"></script>
-<script src="./WallopSlider.js/dist/WallopSlider.js"></script>
+<script src="/wallop/js/wallop.min.js"></script>
+<link href="/jqueryui/jquery-ui.css" rel="stylesheet" />
 <!-- bxSlider CSS file -->
-<link href="./bxslider-4/dist/jquery.bxslider.css" rel="stylesheet" />
-<link href="./WallopSlider.js/dist/WallopSlider.css" rel="stylesheet" />
+<link href="/wallop/css/wallop.css" rel="stylesheet" />
 <title>Yoga</title>
 
 <style type="text/css">
@@ -55,7 +54,8 @@ html{width: 100%; background-color: #ffffff;}
 
 
 p {padding: 0!important; margin-top: 0!important; margin-right: 0!important; margin-bottom: 0!important; margin-left: 0!important; }
-
+.yoga-nav-item {cursor: pointer;}
+.yoga-nav-item:hover {opacity: .6;}
 .hover:hover {opacity:0.85;filter:alpha(opacity=85);}
 
 .jump:hover {opacity:0.75; filter:alpha(opacity=75); padding-top: 10px!important;}
@@ -109,7 +109,7 @@ p {padding: 0!important; margin-top: 0!important; margin-right: 0!important; mar
 
 .icons20 img {width: 20px; height: auto;}
 #logo img {width: 112px; height: auto;}
-.small_img1 img {width: 36px; height: auto;}
+.small_img1 img {height: auto;}
 #relax262 img {width: 262px; height: auto;}
 .image169 img {width: 169px; height: 169px; border-radius: 100%!important;}
 .image176 img {width: 176px; height: auto;}
@@ -192,20 +192,12 @@ image115 img {width: 115px; height: auto;}
 </head>
 
 
-{% macro showYogaSection(section) %}
-  <h3>{{ section.title }}</h3>
-  <image src="{{ section.navimage.url }}" />
-{% endmacro %}
-
-{% macro yogaHead(body) %}
-  <h2>{{ body.headline }}</h2>
-{% endmacro %}
 
 {% macro yogaHeaderSection(body) %}
-  <table id="about-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
+  <table class="yoga-nav-item" id="{{body.slug}}-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
     <tr>
       <tr>
-        <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="{{ body.navimage.url }}" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
+        <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="javascript:void()" style="text-decoration: none;" ><img src="{{ body.navimage.url }}" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
       </tr>
       <tr>
         <td width="100%" height="25"></td>
@@ -223,7 +215,7 @@ image115 img {width: 115px; height: auto;}
 {% endmacro %}
 
 {% macro yogaBodySection(body) %}
-  <table id="about-section" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
+  <table id="{{body.slug}}-section" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
     
     <tr>
       <td width="100%" height="25"></td>
@@ -233,22 +225,25 @@ image115 img {width: 115px; height: auto;}
       {{ body.content|safe }}
       <br />
       {% if body.calenderembed %}
-        {{ body.calenderembed }}
+        {{ body.calenderembed|safe }}
       {% endif %}
       <br />
-      {% if body.imagegallery %}
-        <div class="wallop-slider">
-          <ul class="wallop-slider__list">
-            {% for image in body.imagegallery %}
-              <li class="wallop-slider__item">
+      {% for image in body.imagegallery %}
+        {% if loop.first %}
+          <div class="Wallop">
+            <div class="Wallop-list">
+        {% endif %}
+              <li class="Wallop-item">
                 <img src="{{ image.url }}" width="500">
               </li>
-            {% endfor %}
-          </ul>
-          <button class="wallop-slider__btn wallop-slider__btn--previous" disabled="disabled">Previous</button>
-          <button class="wallop-slider__btn wallop-slider__btn--next">Next</button>
-        </div>
-      {% endif %}
+        {% if loop.last %}
+            </div>
+            <button class="Wallop-buttonPrevious">Previous</button>
+            <button class="Wallop-buttonNext">Next</button>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
       </td>
     </tr>
   </table>
@@ -308,79 +303,79 @@ image115 img {width: 115px; height: auto;}
   
   <!-- Wrapper 2  Top Header-->
   {% for body in data.yogaheader %}
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full"  bgcolor="#f87d76"style="background-color: rgb(248, 125, 118);">
-    <tr>
-      <td width="100%" valign="top"style="-webkit-background-size: cover; background-image: url('{{ body.headerbackgroundimage.url }}'); background-color: rgb(248, 125, 118); background-size: cover; background-position: center center; background-repeat: no-repeat;" id="BGheaderChange">
-            
-            <div class="sortable_inner ui-sortable">
-            <!-- Wrapper -->
-            <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td width="100%" height="65"></td>
-              </tr>
-            </table>
-            
-             <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td height="auto" width="600" valign="bottom" style="line-height: 1px; text-align: center;"><span style="display: block;"> <a href="#" style="text-decoration: none; color: #ffffff; font-family: Helvetica, Arial, sans-serif; font-size: 20px; text-align:center;" ><img width="262" height="auto" src="{{ body.headerimagesmall.url }}" alt="" border="0" style="font-size: 20px; height: auto;" id="box"  cu-identify="element_03635729623492807"></a></span></td>
-              </tr>
-              <tr>
-                <td width="100%" height="12"></td>
-              </tr>
-             </table>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full"  bgcolor="#f87d76"style="background-color: rgb(248, 125, 118);">
+      <tr>
+        <td width="100%" valign="top"style="-webkit-background-size: cover; background-image: url('{{ body.headerbackgroundimage.url }}'); background-color: rgb(248, 125, 118); background-size: cover; background-position: center center; background-repeat: no-repeat;" id="BGheaderChange">
               
-              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small" cu-identifier="element_01433744765818119">
-              <tr>
-                <td width="100%" height="13"></td>
-              </tr>
-              <tr>
-                <td valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 60px; letter-spacing: 10px; text-transform: uppercase; line-height: 100px; word-break: break-word;"class="font89" id="box" ><span  cu-identify="element_0251054429449141"><!--[if !mso]><!--><span style="font-family: 'proxima_novathin', Helvetica; "><!--<![endif]-->
-                  {{ body.headline }}<!--[if !mso]><!--></span><!--<![endif]--></span></td>
-              </tr>
+              <div class="sortable_inner ui-sortable">
+              <!-- Wrapper -->
+              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td width="100%" height="65"></td>
+                </tr>
               </table>
               
-              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 18px; letter-spacing: 1px; text-transform: uppercase;"class="textCenter" id="box" ><span  cu-identify="element_05224484449718148"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica; "><!--<![endif]-->
-                  {{ body.subtext }}<!--[if !mso]><!--></span><!--<![endif]--></span></td>
-              </tr>
+               <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td height="auto" width="600" valign="bottom" style="line-height: 1px; text-align: center;"><span style="display: block;"> <a href="#" style="text-decoration: none; color: #ffffff; font-family: Helvetica, Arial, sans-serif; font-size: 20px; text-align:center;" ><img width="262" height="auto" src="{{ body.headerimagesmall.url }}" alt="" border="0" style="font-size: 20px; height: auto;" id="box"  cu-identify="element_03635729623492807"></a></span></td>
+                </tr>
+                <tr>
+                  <td width="100%" height="12"></td>
+                </tr>
+               </table>
+                
+                <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small" cu-identifier="element_01433744765818119">
+                <tr>
+                  <td width="100%" height="13"></td>
+                </tr>
+                <tr>
+                  <td valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 60px; letter-spacing: 10px; text-transform: uppercase; line-height: 100px; word-break: break-word;"class="font89" id="box" ><span  cu-identify="element_0251054429449141"><!--[if !mso]><!--><span style="font-family: 'proxima_novathin', Helvetica; "><!--<![endif]-->
+                    {{ body.headline }}<!--[if !mso]><!--></span><!--<![endif]--></span></td>
+                </tr>
+                </table>
+                
+                <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 18px; letter-spacing: 1px; text-transform: uppercase;"class="textCenter" id="box" ><span  cu-identify="element_05224484449718148"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica; "><!--<![endif]-->
+                    {{ body.subtext }}<!--[if !mso]><!--></span><!--<![endif]--></span></td>
+                </tr>
+                </table>
+                
+                <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td width="100%" height="43" class="h25"></td>
+                </tr>
+                </table>
+                
+                <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td height="auto" valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 14px; line-height: 26px; font-weight: normal;"class="textCenter" id="box2" >
+                    <p  cu-identify="element_07646508188918233"><span style="font-family: proxima_nova_rgregular, Helvetica;">{{ body.subsubtext }}</span></p>
+                  </td>
+                </tr>
+                </table>
+                
+                <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td width="100%" height="40"></td>
+                </tr>
+                </table>
+                
+                <div style="display: none" id="element_07550619398243725"></div></p></div>
+                
+                <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
+                <tr>
+                  <td width="100%" height="80"></td>
+                </tr>
               </table>
+              <!-- End Wrapper -->
+              </div>
               
-              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td width="100%" height="43" class="h25"></td>
-              </tr>
-              </table>
-              
-              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td height="auto" valign="bottom" width="100%" style="text-align: center; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 14px; line-height: 26px; font-weight: normal;"class="textCenter" id="box2" >
-               	 	<p  cu-identify="element_07646508188918233"><span style="font-family: proxima_nova_rgregular, Helvetica;">{{ body.subsubtext }}</span></p>
-                </td>
-              </tr>
-              </table>
-              
-              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td width="100%" height="40"></td>
-              </tr>
-              </table>
-              
-              <div style="display: none" id="element_07550619398243725"></div></p></div>
-              
-              <table width="600" border="0" align="center" style="mso-table-lspace:0pt; mso-table-rspace:0pt;" class="mobile" id="relax262" object="drag-module-small">
-              <tr>
-                <td width="100%" height="80"></td>
-              </tr>
-            </table>
-            <!-- End Wrapper -->
-            </div>
-            
-        </div>
-        </td>
-    </tr>
-  </table>
-  {% endfor %}
+          </div>
+          </td>
+      </tr>
+    </table>
+    {% endfor %}
   <!-- Wrapper 2 --> 
 
   <!-- NAV TEST SECTION -->
@@ -423,248 +418,7 @@ image115 img {width: 115px; height: auto;}
   <!-- END -->
 
   <!-- Wrapper 3  Feature List-->
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="full" >
-    <tr>
-      <td width="100%"> 
-          
-          <!-- Wrapper -->
-          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="mobile">
-            <tr>
-              <td width="100%" height="66"></td>
-            </tr>
-            <tr>
-              <td width="100%"><!-- Wrapper -->
-                
-                <table width="870" border="0" cellpadding="0" cellspacing="0" align="center" class="fullCenter">
-                  <tr>
-                    <td width="100%"><!-- Feature 1 -->
-
-                      <!-- Midbody Nav -->
-                      <table id="about-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-                        <tr>
-                          <tr>
-                            <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRX7wNH-gCY4aSO6NSNBLGl4lMIRvj4ZI1mf2LgV9aej8zrabjbnw" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
-                                About<!--[if !mso]><!--></span><!--<![endif]--></p></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                        </tr>
-
-                      </table>
-
-                      <table id="class-description-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-                        
-                        <tr>
-                          <tr>
-                            <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="http://earthspirittarot.com/images/sacral.jpg" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
-                                Classes<!--[if !mso]><!--></span><!--<![endif]--></p></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                        </tr>
-
-                      </table>
-
-                      <table id="yoga-schedule-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-
-                        <tr>
-                          <tr>
-                            <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj57PuQOc8x5baf_dKuAIUbltWFM5MAeuBqORIRn5yYErrS9Ou" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
-                                Schedule<!--[if !mso]><!--></span><!--<![endif]--></p></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                        </tr>
-
-                      </table>
-
-                      <table id="gallery-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-
-                        <tr>
-
-                          <tr>
-                            <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="http://images.elephantjournal.com/wp-content/uploads/2013/02/fc15a8b286f2ddfb5738f90e56a630be-250x251.jpg" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
-                                Gallery<!--[if !mso]><!--></span><!--<![endif]--></p></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                        </tr>
-
-                      </table>
-
-                      <table id="contact-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-
-                        <tr>
-                          <tr>
-                            <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="http://www.formix.com.au/chakra/blue.jpg" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
-                                Contact<!--[if !mso]><!--></span><!--<![endif]--></p></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                        </tr>
-
-                      </table>
-
-                      <table id="links-section-nav" width="140" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-
-                        <tr>
-                          <tr>
-                            <td width="100%" height="35" class="fullCenter" style="text-align: center;"><a href="#" style="text-decoration: none;" ><img src="http://rlv.zcache.com/ajna_or_third_eye_chakra_sticker-r945443020eb24caaa966f80ab9d94a77_v9waf_8byvr_512.jpg" width="32" height="auto" style="width: 32px; height: auto;" alt="" border="0" class="hover" cu-identify="element_07122469628229737"></a></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" style="font-size: 18px; color: rgb(248, 125, 118); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 32px; vertical-align: top; font-weight: 700; text-transform: uppercase;"class="fullCenter" ><p  cu-identify="element_07881717879790813"><!--[if !mso]><!--><span style="font-family: 'proxima_nova_rgbold', Helvetica;font-weight:normal;"><!--<![endif]-->
-                                Links<!--[if !mso]><!--></span><!--<![endif]--></p></td>
-                          </tr>
-                          <tr>
-                            <td width="100%" height="25"></td>
-                          </tr>
-                        </tr>
-
-
-
-                        </table>
-                      <!-- End -->
-                      
-                      <!-- About section -->
-                      <table id="about-section" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-                        
-                        <tr>
-                          <td width="100%" height="25"></td>
-                        </tr>
-                        <tr>
-                          <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;"class="fullCenter" >
-                          		<p  cu-identify="element_03595452536828816"><div><span style="font-family: proxima_nova_rgregular, Helvetica;">I love practicing yoga and I am trained in the primary series of Ashtanga vinyasa. I teach Ashtanga-inspired power flow classes as well as gentle yin ones. Yoga has helped me heal from injuries, quiet my thoughts, build strength, and create joy! When we move into postures, we aren't practicing the pose, we're practicing courage and calmness. Come try out my classes or ask me about private lessons. I would love to share my practice with you!</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;"><br></span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">I completed my RYT 200-hour training at Asta Yoga in San Francisco, California in January of 2014. &nbsp;I have been practicing vinyasa yoga for many years, and committed seriously to my practice after a hip injury in 2011. &nbsp;I am always seeking to better understand and strengthen my practice by learning different styles from different teachers, as well as honoring my roots in the study and practice of Ashtanga. &nbsp; I believe there are many complementary paths in wellness, and I have worked as a nursing assistant in a care facility and interned on a medicinal herb farm in the forest of the Pacific Northwest. &nbsp;I am dedicated to natural healing, personal empowerment, nutrition, and sustainable wellness. &nbsp;When I'm not practicing yoga, you can find me making herbal medicine, playing music, and belly dancing.</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;"><br></span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">Wellness and Yoga Education:</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">-"It's Yoga" Yoga Alliance Certified 200-hour Teacher Training, Asta Yoga 2014</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">-Spinal Alignment Workshop, Yoga to the People 2011</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">-Herbaculture Internship, Herb Pharm 2011</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">-Nursing Assistant Program, Portland Community College 2010</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">-Bachelor of Arts in Environmental and Medical History, Lewis &amp;amp; Clark College 2008</span></div></p>
-                          	</td>
-                        </tr>
-                      </table>
-
-                      <!-- End About -->
-
-                      <!-- Class description section -->
-
-                      <table id="class-description" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-                        
-                        <tr>
-                          <td width="100%" height="25"></td>
-                        </tr>
-                        <tr>
-                          <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;"class="fullCenter" ><p  cu-identify="element_02976009240373969"><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 12.8000001907349px; background-color: rgb(255, 255, 255);">"Power Stretch Flow"-&nbsp; This active&nbsp;<span class="il">yoga</span>&nbsp;<span class="il">class</span>&nbsp;will begin with a rigorous warm up, and move through an energetic series of standing and balancing postures.&nbsp; We emphasize breath work, proper alignment, and stabilizing the hips and pelvis.&nbsp; During the second half of&nbsp;<span class="il">class</span>, we move to the floor to hold postures longer, and relax into deep hip openers and spine stretches to release tension and ease into flexibility.&nbsp;<br></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 12.8000001907349px; background-color: rgb(255, 255, 255);"><br>"Yin"-&nbsp;Yin&nbsp;<span class="il">yoga</span>&nbsp;begins with a gentle flow sequence and core exercise to warm up the body and prepare it for deep stretching and relaxation.&nbsp;&nbsp;Yin&nbsp;energy is represented by winter, nighttime, and an inward focus.&nbsp; We will hold postures on the floor for 3-5 minutes to cultivate this quiet, peaceful space in the body and mind, with soft lighting and soothing music.&nbsp;&nbsp;Yin&nbsp;postures are passive, allowing the joints and connective tissues to stretch and release tension.&nbsp; We focus on deep breathing through the postures to keep the mind quiet and reflective during this slow-paced, gentle&nbsp;<span class="il">class</span>.&nbsp;<br></div><div><br></div><!--<![endif]--></p></td>
-                        </tr>
-                      </table>
-
-                      <!-- End class description -->
-
-                      <!-- Yoga schedule section -->
-
-                      <table id="yoga-schedule" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="small_img1">
-                        
-                        <tr>
-                          <td width="100%" height="25"></td>
-                        </tr>
-                        <tr>
-                        <td>
-                          <iframe src="https://www.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=gennykrauseyoga%40gmail.com&amp;color=%23B1365F&amp;ctz=America%2FLos_Angeles" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
-                          </td>
-                        </tr>
-                      </table>
-
-                      <!-- End schedule section -->
-
-                      <!-- Gallery section -->
-
-                      <table id="gallery-section" width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                        
-                        <tr>
-                          <td width="100%" height="25"></td>
-                        </tr>
-                        <tr>
-                          <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;">
-                            <!-- <ul class="bxslider">
-                              <li><center><br /><img src="./photos/yogabackbend.jpg" width="500"/></center></li>
-                              <li><center><br /><img src="./photos/yogabird.jpg" width="500"/></center></li>
-                              <li><center><br /><img src="./photos/yogadancer.jpg" width="500"/></center></li>
-                              <li><center><br /><img src="./photos/yogaheadstand.jpg" width="500"/></center></li>
-                              <li><center><br /><img src="./photos/yogaphoto.jpg" width="500"/></center></li>
-                            </ul> -->
-
-                            
-
-                          </td>
-                        </tr>
-                      </table>
-
-                      <!-- End gallery -->
-
-                      <!-- Links section -->
-
-                      <table id="links-section" width="100%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                        
-                        <tr>
-                          <td width="100%" height="25"></td>
-                        </tr>
-                        <tr>
-                          <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;"class="fullCenter" >
-                            <tr>
-                              <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;"class="fullCenter" ><p  cu-identify="element_0893132942263037"><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://thestudioreno.com/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://www.pureyogaboutiquestudio.com/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://www.sportswestreno.com/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://www.bodyfuelfit.com/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://caughlinclub.com/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://www.astayoga.net/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://yogatothepeople.com/berkeley/</span></div><div><span style="font-family: proxima_nova_rgregular, Helvetica;">http://studioeightyoga.com/</span></div><!--[if !mso]><!--><!--<![endif]--></p></td>
-                            </tr>
-
-                          </td>
-                        </tr>
-                      </table>
-
-                      <!-- End links -->
-                      
-                      
-       
-                      </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-      </div>
-    </td>
-  </tr>
-</table>
-                  
+  
                   
   <!-- Wrapper 3  Feature List-->
   
@@ -792,7 +546,15 @@ image115 img {width: 115px; height: auto;}
                           <td width="100%" height="30"></td>
                         </tr>
                         <tr>
-                          <td width="100%" style="font-size: 14px; color: rgb(180, 180, 180); font-family: Helvetica, Arial, sans-serif; line-height: 23px; vertical-align: top;"><p  cu-identify="element_08324163805227727"><p style="margin: 0px 0px 6px; color: rgb(20, 24, 35); font-family: Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 14px; line-height: 17.5636348724365px; background-color: rgb(255, 255, 255);">What is Ashtanga Flow Yoga? Yin Yoga?</p><p style="margin: 6px 0px; color: rgb(20, 24, 35); font-family: Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 14px; line-height: 17.5636348724365px; background-color: rgb(255, 255, 255);">Ashtanga is a Sanskrit word that translates to “eight limbs,” referring to the eight principles of yoga as outlined by the sage Patanjali. These principles help one achieve a deeper connection to one's spirit and the universe: yama: restraints; niyama: observances; asana: posture; pranayama:breathing practice; pratyahara: sense control; dharana: concentration; dhyana: meditation; Samadhi: contemplation. Sri K. Pattabhi Jois shared P<span class="text_exposed_show" style="display: inline;">atanjali’s teachings with India in the 1940s,with Europeans in the 1970s, and later with American students.</span></p><div class="text_exposed_show" style="display: inline; color: rgb(20, 24, 35); font-family: Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 14px; line-height: 17.5636348724365px; background-color: rgb(255, 255, 255);"><p style="margin: 0px 0px 6px;">Yoga is a Sanskrit word that translates to “yoke” or “union,” as in the connection among breath and posture, body, mind, and spirit.</p><p style="margin: 6px 0px;">Yin is a Chinese word that signifies one half of the energetic forces of all existence, represented by the female archetype, darkness, winter, quiet, and earth. It is a slow-paced, form of yoga that involves deep stretching and holding passive, grounded postures for several minutes.</p><p style="margin: 6px 0px;">Flow signifies a yoga class that is active, energetic, and has a sequential, fluid movement. Flow is also referred to as vinyasa, which refers to movements that link postures together.</p></div><span style="font-family: 'proxima_nova_rgregular', Helvetica;"><br><!--[if !mso]><!--></span><!--<![endif]--></p></td>
+                          <td width="100%" style="font-size: 14px; color: rgb(70, 70, 70); font-family: Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; font-weight: normal;" class="fullCenter">
+                          <p cu-identify="element_08324163805227727">
+                            </p><p style="font-family: proxima_nova_rgregular, Helvetica;">Yoga is a Sanskrit word that translates to “yoke” or “union,” as in the connection among breath and posture, body, mind, and spirit.<br><br></p>
+                            <p style="font-family: proxima_nova_rgregular, Helvetica;">"Ashtanga" is a Sanskrit word that translates to “eight limbs,” referring to the eight principles of yoga as outlined by the sage Patanjali. These principles help one achieve a deeper connection to one's spirit and the universe. Sri K. Pattabhi Jois shared P<span class="text_exposed_show" style="display: inline;">atanjali’s teachings with India in the 1940s, with Europeans in the 1970s, and later with American students.</span><br><br></p>
+                            <p style="font-family: proxima_nova_rgregular, Helvetica;">"Yin" is a Chinese word that signifies one half of the energetic forces of all existence, represented by the female archetype, darkness, winter, quiet, and earth. It is a slow-paced, form of yoga that involves deep stretching and holding passive, grounded postures for several minutes.<br><br></p>
+                            <p style="font-family: proxima_nova_rgregular, Helvetica;">"Flow" signifies a yoga class that is active, energetic, and has a sequential, fluid movement. Flow is also referred to as vinyasa, which refers to movements that link postures together.</p>
+                            <span style="font-family: 'proxima_nova_rgregular', Helvetica;"><br><!--[if !mso]><!--></span><!--<![endif]-->
+                          <p></p>
+                          </td>
                         </tr>
                         <tr>
                           <td width="100%" height="40"></td>
@@ -2381,7 +2143,7 @@ border-radius: 6px;">
                       <!-- Contact  Image  -->                      
                       <table width="180" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="fullCenter">
                         <tr>
-                          <td width="100%" class="fullCenter"><a href="#" ><img src="./photos/yogabackbend.jpg" width="115" height="auto" style="width: 115px; height:auto;  border-radius: 100px" alt="" border="0"  class="hover"></a></td>
+                          <td width="100%" class="fullCenter"><a href="#" ><img src="http://res.cloudinary.com/dl64yw51e/image/upload/v1442879467/ms8a9zhhydkvatu14nrq.jpg" width="115" height="auto" style="width: 115px; height:auto;  border-radius: 100px" alt="" border="0"  class="hover"></a></td>
                         </tr>
                       </table>
                       <!--End of Contact Image-->
@@ -2448,12 +2210,7 @@ border-radius: 6px;">
           </tr>
           </table>
           <!-- End Wrapper --> 
-          <!-- keystone rendering test area -->
-           <h1>THIS IS A TEST</h1>
-           {% for section in data.yogasections %}
-            {{ showYogaSection(section) }}
-           {% endfor %}
-           {# <strong>{{ data.yogasections | safe }}</strong> #}
+          
          </div>
     
    
@@ -2469,44 +2226,42 @@ border-radius: 6px;">
     $(document).ready(function(){
 
       // New slide
-
-      var slider = new WallopSlider('.wallop-slider');
+      var wallopEl = document.querySelector('.Wallop');
+      var wallop = new Wallop(wallopEl);
 
       // 
 
-      $('.bxslider').bxSlider();
 
       // Initially hidden sections
-      $("#class-description, #yoga-schedule, #gallery-section, #links-section").hide()
+      $("#classes-section, #schedule-section, #gallery-section, #links-section, #contact-section").hide()
 
-      $("#about-section-nav").click( function(){
-        $("#class-description, #yoga-schedule, #gallery-section, #links-section").hide()
-
+      $("#about-nav").click( function(){
+        $("#classes-section, #schedule-section, #gallery-section, #links-section").hide()
         $("#about-section").show("fold")
       })
 
-      $("#class-description-nav").click( function() {
-        $("#about-section, #yoga-schedule, #gallery-section, #links-section").hide()
-        $("#class-description").show("fold")
+      $("#classes-nav").click( function() {
+        $("#about-section, #schedule-section, #gallery-section, #links-section").hide()
+        $("#classes-section").show("fold")
       })
 
-      $("#yoga-schedule-nav").click( function() {
-        $("#class-description, #about-section, #gallery-section, #links-section").hide()
-        $("#yoga-schedule").show("fold")
+      $("#schedule-nav").click( function() {
+        $("#about-section, #classes-section, #gallery-section, #links-section").hide()
+        $("#schedule-section").show("fold")
       })
 
-      $("#gallery-section-nav").click( function() {
-        $("#class-description, #about-section, #yoga-schedule, #links-section").hide()
+      $("#gallery-nav").click( function() {
+        $("#about-section, #classes-section, #schedule-section, #links-section").hide()
         $("#gallery-section").show("fold")
       })
 
-      $("#contact-section-nav").click( function() {
+      $("#contact-nav").click( function() {
         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
           return false;
       })
 
-      $("#links-section-nav").click( function() {
-        $("#class-description, #about-section, #gallery-section, #yoga-schedule").hide()
+      $("#links-nav").click( function() {
+        $("#about-section, #classes-section, #schedule-section, #gallery-section").hide()
         $("#links-section").show("fold")
       })
     });
